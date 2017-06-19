@@ -4,5 +4,10 @@
 
 
 @section('content')
-    
+    @include('plugins.admin-heading', ['title' => 'Dashboard'])
+
+    <div class="container">
+        Under Construction
+    </div>
+
 @endsection
