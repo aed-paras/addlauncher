@@ -20,42 +20,51 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminauth', 'namespace' => '
 
     Route::get('/users', 'UserController@index');
 
-    // Cities
-    Route::get('/city', 'CityController@index');
-    Route::post('/city', 'CityController@store');
-    Route::put('/city', 'CityController@update');
-    Route::delete('/city/{id}', 'CityController@destroy');
-    
-    // Manage Metro Lines
-    Route::get('/metro_line_list', 'MetroLineController@index');
-    Route::get('/metro_line/create', 'MetroLineController@create');
-    Route::post('/metro_line', 'MetroLineController@store');
-    Route::put('/metro_line/{id}', 'MetroLineController@update');
-    Route::delete('/metro_line/{id}', 'MetroLineController@destroy');
 
-    // Stations
-    Route::get('/stations/{city_id}', 'StationController@index');
-    Route::post('/station', 'StationController@store');
-    Route::put('/station/{id}', 'StationController@update');
-    Route::delete('/station/{id}', 'StationController@destroy');
-    
-    // Media List
-    Route::get('/media_list', 'MediaController@index');
-    Route::post('/media', 'MediaController@store');
-    Route::put('/media/{id}', 'MediaController@update');
-    Route::delete('/media/{id}', 'MediaController@destroy');
-    
-    // Panel Types
-    Route::get('/panel_type', 'PanelTypeController@index');
-    Route::post('/panel_type', 'PanelTypeController@store');
-    Route::put('/panel_type/{id}', 'PanelTypeController@update');
-    Route::delete('/panel_type/{id}', 'PanelTypeController@destroy');
-    
-    // Panel
-    Route::get('/panel/{station_id}', 'PanelController@index');
-    Route::get('/panel/create/{station_id}', 'PanelController@create');
-    Route::post('/panel', 'PanelController@store');
-    Route::put('/panel/{id}', 'PanelController@update');
-    Route::delete('/panel/{id}', 'PanelController@destroy');
+    // METRO Group
+    Route::group(['prefix' => 'metro', 'namespace' => 'metro'], function () {
+
+        // Metro Home Page
+        Route::get('/', 'MetroController@index');
+
+        // Cities
+        Route::get('/city', 'CityController@index');
+        Route::post('/city', 'CityController@store');
+        Route::put('/city/{id}', 'CityController@update');
+        Route::delete('/city/{id}', 'CityController@destroy');
+        
+        // Lines
+        Route::get('/line/{city_id}', 'LineController@index');
+        Route::post('/line', 'LineController@store');
+        Route::put('/line/{id}', 'LineController@update');
+        Route::delete('/line/{id}', 'LineController@destroy');
+
+        // Stations
+        Route::get('/station/{line_id}', 'StationController@index');
+        Route::post('/station', 'StationController@store');
+        Route::put('/station/{id}', 'StationController@update');
+        Route::delete('/station/{id}', 'StationController@destroy');
+        
+        // Panels
+        Route::get('/panel/{station_id}', 'PanelController@index');
+        Route::get('/panel/create/{station_id}', 'PanelController@create');
+        Route::post('/panel', 'PanelController@store');
+        Route::put('/panel/{id}', 'PanelController@update');
+        Route::delete('/panel/{id}', 'PanelController@destroy');
+        
+        // Area
+        Route::get('/area', 'AreaController@index');
+        Route::post('/area', 'AreaController@store');
+        Route::put('/area/{id}', 'AreaController@update');
+        Route::delete('/area/{id}', 'AreaController@destroy');
+        
+        // Panel Types
+        Route::get('/panel_type', 'PanelTypeController@index');
+        Route::post('/panel_type', 'PanelTypeController@store');
+        Route::put('/panel_type/{id}', 'PanelTypeController@update');
+        Route::delete('/panel_type/{id}', 'PanelTypeController@destroy');
+        
+    });
+
 
 });

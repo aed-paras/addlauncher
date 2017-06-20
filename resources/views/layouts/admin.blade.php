@@ -25,6 +25,7 @@
 
     <!--Import font awesome-->
     <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
 
     @yield('import_styles')
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"  media="screen,projection"/>
@@ -43,12 +44,22 @@
     <!-- Scripts -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-    
+    <script type="text/javascript" src="{{ asset('js/iziToast.min.js') }}"></script>
+
     @yield('import_scripts')
   
     <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/admin-script.js') }}"></script>
-
+    @if(session('message'))
+        <?php $message = Session::get('message'); ?>
+        <script>
+            iziToast.{{ $message['type'] }}({
+                title: "{{ $message['title'] }}",
+                message: "{{ $message['message'] }}",
+                position: "{{ $message['position'] }}"
+            });
+        </script>
+    @endif
     @yield('custom_scripts')
 
 </body>

@@ -9,7 +9,7 @@
 					<img src="{{ asset('images/navbg.png') }}">
 				</div>
 				<a id="logo-container" href="{{ url('/admin') }}" class="brand-logo">
-					<img src="{{ asset('images/logo-big.png') }}" alt="ADD Launcher Logo" width="90%">
+					<img src="{{ asset('images/logo-big-light.png') }}" alt="ADD Launcher Logo" width="90%">
 				</a>
 				<span class="white-text name">{{ Auth::user()->name }}</span>
 				<span class="white-text email">{{ Auth::user()->email }}</span>
@@ -20,54 +20,56 @@
 		<li class="bold @yield('categories_active')"><a href="{{ url('/admin/categories') }}" class="waves-effect waves-teal"><i class="material-icons">view_module</i>Categories</a></li>
 		<li class="bold @yield('orders_active')"><a href="{{ url('/admin/orders') }}" class="waves-effect waves-teal"><i class="material-icons">toc</i>Orders</a></li>
 		<li class="divider"></li>
-		<ul class="collapsible collapsible-accordion">
-			<li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-paper-plane"></i>Airport</a>
-				<div class="collapsible-body">
-					<ul>
-						<li class="@yield('airport_cities_active')"><a href="{{ url('/admin/airport/cities') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
-						<li class="@yield('airport_stations_active')"><a href="{{ url('/admin/airport/stations') }}"><i class="material-icons">trending_flat</i>Stations</a></li>
-						<li class="@yield('airport_area_active')"><a href="{{ url('/admin/airport/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
-						<li class="@yield('airport_panel_types_active')"><a href="{{ url('/admin/airport/panel_types') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
-						<li class="@yield('airport_panels_active')"><a href="{{ url('/admin/airport/panels') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
-					</ul>
-				</div>
-			</li>
-			<li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-subway"></i>Metro</a>
-				<div class="collapsible-body">
-					<ul>
-						<li class="@yield('metro_cities_active')"><a href="{{ url('/admin/metro/cities') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
-						<li class="@yield('metro_lines_active')"><a href="{{ url('/admin/metro/lines') }}"><i class="material-icons">trending_flat</i>Lines</a></li>
-						<li class="@yield('metro_stations_active')"><a href="{{ url('/admin/metro/stations') }}"><i class="material-icons">trending_flat</i>Stations</a></li>
-						<li class="@yield('metro_area_active')"><a href="{{ url('/admin/metro/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
-						<li class="@yield('metro_panel_types_active')"><a href="{{ url('/admin/metro/panel_types') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
-						<li class="@yield('metro_panels_active')"><a href="{{ url('/admin/metro/panels') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
-					</ul>
-				</div>
-			</li>
-			<li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-road"></i>Outdoor</a>
-				<div class="collapsible-body">
-					<ul>
-						<li class="@yield('outdoor_cities_active')"><a href="{{ url('/admin/outdoor/cities') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
-						<li class="@yield('outdoor_locations_active')"><a href="{{ url('/admin/outdoor/locations') }}"><i class="material-icons">trending_flat</i>Locations</a></li>
-						<li class="@yield('outdoor_area_active')"><a href="{{ url('/admin/outdoor/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
-						<li class="@yield('outdoor_panel_types_active')"><a href="{{ url('/admin/outdoor/panel_types') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
-						<li class="@yield('outdoor_panels_active')"><a href="{{ url('/admin/outdoor/panels') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
-					</ul>
-				</div>
-			</li>
-			<li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-building"></i>Shopping Malls</a>
-				<div class="collapsible-body">
-					<ul>
-						<li class="@yield('shopping_mall_cities_active')"><a href="{{ url('/admin/shopping_mall/cities') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
-						<li class="@yield('shopping_mall_locations_active')"><a href="{{ url('/admin/shopping_mall/locations') }}"><i class="material-icons">trending_flat</i>Locations</a></li>
-						<li class="@yield('shopping_mall_shopping_malls_active')"><a href="{{ url('/admin/shopping_mall/shopping_mall') }}"><i class="material-icons">trending_flat</i>Shopping Malls</a></li>
-						<li class="@yield('shopping_mall_area_active')"><a href="{{ url('/admin/shopping_mall/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
-						<li class="@yield('shopping_mall_panel_types_active')"><a href="{{ url('/admin/shopping_mall/panel_types') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
-						<li class="@yield('shopping_mall_panels_active')"><a href="{{ url('/admin/shopping_mall/panels') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
-					</ul>
-				</div>
-			</li>
-		</ul>
+		<li class="no-padding">
+			<ul class="collapsible collapsible-accordion">
+				<li class="bold @yield('airpot_active')"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-paper-plane"></i>Airport</a>
+					<div class="collapsible-body">
+						<ul>
+							<li class="@yield('airport_cities_active')"><a href="{{ url('/admin/airport/city') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
+							<li class="@yield('airport_stations_active')"><a href="{{ url('/admin/airport/station') }}"><i class="material-icons">trending_flat</i>Stations</a></li>
+							<li class="@yield('airport_area_active')"><a href="{{ url('/admin/airport/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
+							<li class="@yield('airport_panel_types_active')"><a href="{{ url('/admin/airport/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('airport_panels_active')"><a href="{{ url('/admin/airport/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="bold @yield('metro_active')"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-subway"></i>Metro</a>
+					<div class="collapsible-body">
+						<ul>
+							<li class="@yield('metro_cities_active')"><a href="{{ url('/admin/metro/city') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
+							<li class="@yield('metro_lines_active')"><a href="{{ url('/admin/metro/line') }}"><i class="material-icons">trending_flat</i>Lines</a></li>
+							<li class="@yield('metro_stations_active')"><a href="{{ url('/admin/metro/station') }}"><i class="material-icons">trending_flat</i>Stations</a></li>
+							<li class="@yield('metro_area_active')"><a href="{{ url('/admin/metro/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
+							<li class="@yield('metro_panel_types_active')"><a href="{{ url('/admin/metro/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('metro_panels_active')"><a href="{{ url('/admin/metro/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="bold @yield('outdoor_active')"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-road"></i>Outdoor</a>
+					<div class="collapsible-body">
+						<ul>
+							<li class="@yield('outdoor_cities_active')"><a href="{{ url('/admin/outdoor/city') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
+							<li class="@yield('outdoor_locations_active')"><a href="{{ url('/admin/outdoor/location') }}"><i class="material-icons">trending_flat</i>Locations</a></li>
+							<li class="@yield('outdoor_area_active')"><a href="{{ url('/admin/outdoor/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
+							<li class="@yield('outdoor_panel_types_active')"><a href="{{ url('/admin/outdoor/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('outdoor_panels_active')"><a href="{{ url('/admin/outdoor/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="bold @yield('shopping_mall_active')"><a class="collapsible-header  waves-effect waves-teal"><i class="fa fa-building"></i>Shopping Malls</a>
+					<div class="collapsible-body">
+						<ul>
+							<li class="@yield('shopping_mall_cities_active')"><a href="{{ url('/admin/shopping_mall/city') }}"><i class="material-icons">trending_flat</i>Cities</a></li>
+							<li class="@yield('shopping_mall_locations_active')"><a href="{{ url('/admin/shopping_mall/location') }}"><i class="material-icons">trending_flat</i>Locations</a></li>
+							<li class="@yield('shopping_mall_shopping_malls_active')"><a href="{{ url('/admin/shopping_mall/shopping_mall') }}"><i class="material-icons">trending_flat</i>Shopping Malls</a></li>
+							<li class="@yield('shopping_mall_area_active')"><a href="{{ url('/admin/shopping_mall/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
+							<li class="@yield('shopping_mall_panel_types_active')"><a href="{{ url('/admin/shopping_mall/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('shopping_mall_panels_active')"><a href="{{ url('/admin/shopping_mall/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</li>		
 		<li class="divider"></li>
 		<li class="bold @yield('settings_active')"><a href="/admin/settings"><i class="material-icons">settings</i>Settings</a></li>
 		<li class="bold">

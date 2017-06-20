@@ -15,7 +15,7 @@
                     <th data-field="name">Name</th>
                     <th data-field="email">Email ID</th>
                     <th data-field="created_at">Joined At</th>
-                    <th data-field="action">Actions</th>
+                    <th data-field="action" class="center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,9 +25,8 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
-                    <td>
-                        <a href="#" class="waves-effect waves-light btn blue">View</a>
-                        <a href="#" class="waves-effect waves-light btn red">Make Admin</a>
+                    <td class="center">
+                        <a href="#" class="waves-effect waves-light btn yellow darken-2">Make Admin</a>
                         <a href="#" class="waves-effect waves-light btn red">Delete</a>
                     </td>
                 </tr>
