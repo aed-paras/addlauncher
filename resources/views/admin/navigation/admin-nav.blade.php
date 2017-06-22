@@ -29,6 +29,7 @@
 							<li class="@yield('airport_stations_active')"><a href="{{ url('/admin/airport/station') }}"><i class="material-icons">trending_flat</i>Stations</a></li>
 							<li class="@yield('airport_area_active')"><a href="{{ url('/admin/airport/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
 							<li class="@yield('airport_panel_types_active')"><a href="{{ url('/admin/airport/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('airport_vendors_active')"><a href="{{ url('/admin/airport/vendor') }}"><i class="material-icons">trending_flat</i>Vendors</a></li>
 							<li class="@yield('airport_panels_active')"><a href="{{ url('/admin/airport/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
 						</ul>
 					</div>
@@ -41,6 +42,7 @@
 							<li class="@yield('metro_stations_active')"><a href="{{ url('/admin/metro/station') }}"><i class="material-icons">trending_flat</i>Stations</a></li>
 							<li class="@yield('metro_area_active')"><a href="{{ url('/admin/metro/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
 							<li class="@yield('metro_panel_types_active')"><a href="{{ url('/admin/metro/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('metro_vendors_active')"><a href="{{ url('/admin/metro/vendor') }}"><i class="material-icons">trending_flat</i>Vendors</a></li>
 							<li class="@yield('metro_panels_active')"><a href="{{ url('/admin/metro/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
 						</ul>
 					</div>
@@ -52,6 +54,7 @@
 							<li class="@yield('outdoor_locations_active')"><a href="{{ url('/admin/outdoor/location') }}"><i class="material-icons">trending_flat</i>Locations</a></li>
 							<li class="@yield('outdoor_area_active')"><a href="{{ url('/admin/outdoor/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
 							<li class="@yield('outdoor_panel_types_active')"><a href="{{ url('/admin/outdoor/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('outdoor_vendors_active')"><a href="{{ url('/admin/outdoor/vendor') }}"><i class="material-icons">trending_flat</i>Vendors</a></li>
 							<li class="@yield('outdoor_panels_active')"><a href="{{ url('/admin/outdoor/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
 						</ul>
 					</div>
@@ -64,6 +67,7 @@
 							<li class="@yield('shopping_mall_shopping_malls_active')"><a href="{{ url('/admin/shopping_mall/shopping_mall') }}"><i class="material-icons">trending_flat</i>Shopping Malls</a></li>
 							<li class="@yield('shopping_mall_area_active')"><a href="{{ url('/admin/shopping_mall/area') }}"><i class="material-icons">trending_flat</i>Area</a></li>
 							<li class="@yield('shopping_mall_panel_types_active')"><a href="{{ url('/admin/shopping_mall/panel_type') }}"><i class="material-icons">trending_flat</i>Panel Types</a></li>
+							<li class="@yield('shopping_mall_vendors_active')"><a href="{{ url('/admin/shopping_mall/vendor') }}"><i class="material-icons">trending_flat</i>Vendors</a></li>
 							<li class="@yield('shopping_mall_panels_active')"><a href="{{ url('/admin/shopping_mall/panel') }}"><i class="material-icons">trending_flat</i>Panels</a></li>
 						</ul>
 					</div>

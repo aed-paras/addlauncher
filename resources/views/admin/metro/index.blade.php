@@ -14,7 +14,9 @@
 
                 <a href="{{ url('admin/metro/area') }}" class="btn waves-effect waves-light">Area</a>
 
-                <a href="{{ url('admin/metro/panel_types') }}" class="btn waves-effect waves-light">Panel Types</a>
+                <a href="{{ url('admin/metro/panel_type') }}" class="btn waves-effect waves-light">Panel Types</a>
+
+                <a href="{{ url('admin/metro/vendor') }}" class="btn waves-effect waves-light">Vendors</a>
 
         </div>
 

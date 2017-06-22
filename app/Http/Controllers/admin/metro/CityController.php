@@ -11,7 +11,7 @@ class CityController extends Controller{
 
     public function index(){
         $cities = MetroCity::all();
-        return view('admin.metro.city', ['cities' => $cities]);
+        return view('admin.metro.city.city', ['cities' => $cities]);
     }
 
     public function store(Request $request){
@@ -35,7 +35,7 @@ class CityController extends Controller{
     }
 
     public function destroy($id){
-        // TODO: Delete all stations in it.
+        // TODO: Delete all lines in it.
         $city = MetroCity::find($id);
         $city->delete();
         return;

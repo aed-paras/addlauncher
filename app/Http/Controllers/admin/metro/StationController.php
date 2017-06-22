@@ -52,7 +52,7 @@ class StationController extends Controller{
 		$metro_line->name = $request->name;
 		$metro_line->save();
 		return back()->with(['message'=>['type' => 'success', 'title' => 'Updated!', 'message'=>'Metro Line changed!', 'position' => 'topRight']]);
-	}
+	}	
 
 	/**
 	 * Remove the specified metro station from storage.

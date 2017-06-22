@@ -14,7 +14,9 @@ class PanelController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index($station_id){
-		
+        $station = \App\MetroStation::findOrFail($station_id);
+        $panels = MetroPanel::where('metro_station_id', $station_id)->get();
+        return view('admin.metro.panel', ['panels' => $panels, 'station' => $station]);
 	}
 
 	/**
@@ -22,9 +24,11 @@ class PanelController extends Controller{
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
-		//
+	public function create($station_id){
+        $station = \App\MetroStation::findorFail($station_id);
+        $areas = \App\MetroArea::all();
+        $panel_types = \App\MetroPanelType::all();
+        return view('admin.metro.panel_create', ['station' => $station, 'areas' => $areas, 'panel_types' => $panel_types]);
 	}
 
 	/**
@@ -33,8 +37,7 @@ class PanelController extends Controller{
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
-	{
+	public function store(Request $request){
 		//
 	}
 
@@ -44,8 +47,7 @@ class PanelController extends Controller{
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
-	{
+	public function show($id){
 		//
 	}
 
@@ -55,8 +57,7 @@ class PanelController extends Controller{
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
-	{
+	public function edit($id){
 		//
 	}
 
@@ -67,8 +68,7 @@ class PanelController extends Controller{
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
-	{
+	public function update(Request $request, $id){
 		//
 	}
 
@@ -78,8 +78,7 @@ class PanelController extends Controller{
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id){
 		//
 	}
 }

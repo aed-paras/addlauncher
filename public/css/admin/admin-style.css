@@ -19,7 +19,19 @@ header, main, footer {
 }
 .no_data{
     height: 300px;
+    font-size: 28px;
+}
+.no_data i{
+    font-size: 120px;
 }
 #edit_name{
     font-weight: bold;
+}
+.bottom-right-btn{
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+}
+.padding-20{
+    padding: 20px;
 }

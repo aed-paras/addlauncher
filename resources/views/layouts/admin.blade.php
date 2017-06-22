@@ -32,6 +32,8 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/admin/admin-style.css') }}"  media="screen,projection"/>
     @yield('custom_styles')
 
+    @yield('head_import_scripts')
+
 </head>
 <body>
 

@@ -13,9 +13,9 @@ class LineController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index($city_id){
-        $current_city = \App\MetroCity::findOrFail($city_id);
-        $lines = MetroLine::where('metro_city_id', $city_id)->get();
-        return view('admin.metro.line', ['lines' => $lines, 'current_city' => $current_city]);
+        $city = \App\MetroCity::findOrFail($city_id);
+        $lines = MetroLine::select(['id', 'name'])->where('metro_city_id', $city_id)->get();
+        return view('admin.metro.line.line', ['lines' => $lines, 'city' => $city]);
     }
 
     /**
@@ -28,14 +28,28 @@ class LineController extends Controller{
         $this->validate($request, [
             'name' => 'required',
             'city_id' => 'required|integer',
+            'description' => 'string',
         ]);
 
         $metro_line = new MetroLine;
         $metro_line->metro_city_id = $request->city_id;
         $metro_line->name = $request->name;
+        $metro_line->description = $request->description;
         $metro_line->save();
 
         return back()->with(['message'=>['type' => 'success', 'title' => 'Created!', 'message'=>'New Metro Line!', 'position' => 'topRight']]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id){
+        $line = MetroLine::findOrFail($id);
+        $cities = \App\MetroCity::all();
+        return view('admin.metro.line.edit', ['line' => $line, 'cities' => $cities]);
     }
 
     /**
@@ -64,9 +78,17 @@ class LineController extends Controller{
 
         $metro_line = MetroLine::find($id);
 
-        File::delete('storage/metro/' . $metro_line->image);
-
         $metro_line->delete();
         return;
     }
+
+
+    // AJAX Communication
+
+    public function description($id){
+        $line = MetroLine::findOrFail($id);
+        return $line->description;
+    }
+
+
 }

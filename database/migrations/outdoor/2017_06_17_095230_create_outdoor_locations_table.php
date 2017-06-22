@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateOutdoorLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('outdoor_locations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('city_id');
             $table->string('name');
-            $table->string('slug')->unique();
             $table->string('description', 10000)->nullable();
             $table->boolean('visibility')->default(1);
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('outdoor_locations');
     }
 }

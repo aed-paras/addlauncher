@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->boolean('admin')->default(0);
+            $table->boolean('user_type_id')->default(0);    // 0 = Normal, 1 = Marketing Team...
+            $table->boolean('admin')->default(0);    // 0 = Not Admin, 1 = Admin
             $table->timestamps();
         });
     }
