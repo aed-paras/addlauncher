@@ -37,6 +37,17 @@ class AreaController extends Controller{
         return back()->with(['message'=>['type' => 'success', 'title' => 'Created!', 'message'=>'New area created!', 'position' => 'topRight']]);
 	}
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id){
+        $area = MetroArea::findOrFail($id);
+        return view('admin.metro.area.edit', ['area' => $area]);
+    }
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -47,8 +58,9 @@ class AreaController extends Controller{
 	public function update(Request $request, $id){
         $area = MetroArea::findOrFail($id);
         $area->name = $request->name;
+        $area->description = $request->description;
         $area->save();
-        return back()->with(['message'=>['type' => 'success', 'title' => 'Updated!', 'message'=>'Area name changed!', 'position' => 'topRight']]);
+        return redirect('admin/metro/area')->with(['message'=>['type' => 'success', 'title' => 'Updated!', 'message'=>'Area name changed!', 'position' => 'topRight']]);
 	}
 
 	/**
@@ -63,4 +75,14 @@ class AreaController extends Controller{
         $area->delete();
         return;
 	}
+
+
+    // AJAX Communication
+
+    public function description($id){
+        $area = MetroArea::findOrFail($id);
+        return $area->description;
+    }
+
+
 }

@@ -2,6 +2,10 @@
 
 @section('metro_active') active @endsection 
 
+@section('head_import_scripts')
+	@include('plugins.tiny-mce')
+@endsection
+
 @section('content')
 	@include('plugins.admin-heading', ['title' => 'Metro Areas'])
     <nav class="blue lighten-1">
@@ -17,20 +21,10 @@
 
 	<div class="container">
 		<br>
-		<h5>Add Metro Area</h5>
-		<div class="row">
-			<form action="{{ url('admin/metro/area') }}" method="post" class="col s12">
-				{{ csrf_field() }}
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="area_name" type="text" class="validate" name="name" maxlength="255" autofocus="on" required>
-						<label for="area_name">Area Name</label>
-						<button type="submit" class="btn blue lighten-2 waves-effect waves-light"><i class="material-icons left">add</i>Add Area</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<br>
+		@include('plugins.add_btn')
+
+		@include('plugins.validation_error')
+
 		<h5>List of metro areas</h5>
 		<table class="highlight">
 			<thead>
@@ -44,9 +38,9 @@
 			@forelse ($areas as $area)
 				<tr class="area_row" id="area_row_{{$area->id}}">
 					<td>{{ $area->id }}</td>
-					<td class="area-name">{{ $area->name }}</td>
+					<td class="area-name"><a href="#view_modal" data-id="{{ $area->id }}">{{ $area->name }}</a></td>
 					<td class="right-align">
-						<a href="#edit_modal" class="waves-effect waves-light btn yellow darken-3 edit-btn" data-id="{{$area->id}}">Edit</a>
+						<a href="{{ url('admin/metro/area/'.$area->id.'/edit') }}" class="waves-effect waves-light btn yellow darken-3">Edit</a>
 						<a class="waves-effect waves-light btn red delete-btn" data-id="{{$area->id}}">Delete</a>
 					</td>
 				</tr>
@@ -64,31 +58,74 @@
 
 	</div>
 
-	<!-- Modal Structure -->
-	<div id="edit_modal" class="modal">
-		<form action="{{ url('/admin/area') }}" method="post" class="col s12">
-			<div class="modal-content">
-				<h4>Edit Area</h4>
-				<div>Changing <span id="edit_name"></span></div>
+	<!-- Add Modal Structure -->
+	<div id="add_modal" class="modal modal-fixed-footer">
+        <form action="{{ url('/admin/metro/area/') }}" method="post" class="col s12">
+            <div class="modal-content">
+                <h4>Add Metro Area</h4>
+				{{ csrf_field() }}
 				<div class="row">
-					{{ csrf_field() }}
-					{{ method_field('PUT') }}
-					<div class="row">
-						<div class="input-field col s12">
-							<input id="area_new_name_input" type="text" class="validate" name="name" maxlength="255" placeholder="">
-							<label for="area_new_name_input">New Name</label>
-						</div>
+					<div class="input-field col s12">
+						<input id="area_name" type="text" class="validate" name="name" maxlength="255" required>
+						<label for="area_name">Metro Area Name</label>
+					</div>
+					<div class="input-field col s12">
+						<h6>Description (optional):</h6>
+						<textarea name="description" class="tinymce"></textarea>
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Change</button>
-			</div>
-		</form>
+            <div class="modal-footer">
+				<button type="submit" class="btn-flat lighten-2 waves-effect waves-light"><i class="material-icons left">add</i>Add Area</button>
+            </div>
+        </form>
 	</div>
+
+	<!-- View Modal Structure -->
+	<div id="view_modal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<a href="" class="btn-flat right waves-effect waves-light view_modal_edit_btn modal-close"><i class="material-icons left">mode_edit</i>Edit</a>
+			<h4>Area: <span id="view_name"></span></h4>
+			<div class="divider"></div>
+			<br>
+			<div><strong>Description:</strong>
+				<br>
+				<span id="view_description"></span>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn-flat lighten-2 waves-effect waves-light modal-close">Close</button>
+		</div>
+	</div>
+
 
 @endsection
 
 @section('custom_scripts')
-    <script src="{{ asset('js/admin/metro/area.js') }}"></script>
+	<script>
+		$('.delete-btn').click(function () {
+			var self = $(this);
+			var id = self.data('id');
+			$.ajax({
+				url: baseurl + "/admin/metro/area/" + id,
+				method: 'DELETE',
+				data: { '_token': csrf }
+			}).done(function () {
+				$("#area_row_" + id).slideUp();
+				deleteNotification();
+			});
+		});
+
+		$('.area-name a').click(function () {
+			var id = $(this).data('id');
+			var area_name = $(this).text();
+			$('#view_name').text(area_name);
+			$('.view_modal_edit_btn').attr('data-id', id);
+			$('.view_modal_edit_btn').attr('href', baseurl + '/admin/metro/area/' + id + '/edit');
+			$.get(baseurl + '/admin/metro/area/description/' + id, {}, function (data) {
+				$('#view_description').html(data);
+			});
+		});
+
+	</script>
 @endsection

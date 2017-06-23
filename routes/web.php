@@ -66,9 +66,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminauth', 'namespace' => '
         Route::put('/panel/{id}', 'PanelController@update');
         Route::delete('/panel/{id}', 'PanelController@destroy');
 
-        Route::resource('area', 'AreaController');
+        Route::resource('area', 'AreaController', ['except' => ['create', 'show']]);
+            // Ajax Routes
+            Route::get('/area/description/{id}', 'AreaController@description');
 
-        Route::resource('panel_type', 'PanelTypeController');
+        Route::resource('panel_type', 'PanelTypeController', ['except' => ['create', 'show']]);
+            // Ajax Routes
+            Route::get('/panel_type/description/{id}', 'PanelTypeController@description');
 
         Route::resource('vendor', 'VendorController');
         

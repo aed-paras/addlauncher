@@ -14,8 +14,8 @@ class PanelTypeController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-		$panel_types = MetroPanelType::all();
-		return view('admin.metro.panel_type', ['panel_types' => $panel_types]);
+		$panel_types = MetroPanelType::select(['id', 'name'])->get();
+		return view('admin.metro.panel_type.panel_type', ['panel_types' => $panel_types]);
     }
 
     /**
@@ -25,10 +25,27 @@ class PanelTypeController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+		$this->validate($request, [
+			'name' => 'required',
+            'description' => 'nullable|string|max:10000',
+		]);
+
         $panel_type = new MetroPanelType;
         $panel_type->name = $request->name;
+        $panel_type->description = $request->description;
         $panel_type->save();
         return back()->with(['message'=>['type' => 'success', 'title' => 'Created!', 'message'=>'New panel type created!', 'position' => 'topRight']]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id){
+        $panel_type = MetroPanelType::findOrFail($id);
+        return view('admin.metro.panel_$panel_type.edit', ['panel_$panel_type' => $panel_type]);
     }
 
     /**
@@ -41,6 +58,7 @@ class PanelTypeController extends Controller{
     public function update(Request $request, $id){
         $panel_type = MetroPanelType::findOrFail($id);
         $panel_type->name = $request->name;
+        $area->description = $request->description;
         $panel_type->save();
         return back()->with(['message'=>['type' => 'success', 'title' => 'Updated!', 'message'=>'Panel type name changed!', 'position' => 'topRight']]);
     }
@@ -57,4 +75,13 @@ class PanelTypeController extends Controller{
         $panel_type->delete();
         return;
     }
+
+
+    // AJAX Communication
+
+    public function description($id){
+        $panel_type = MetroPanelType::findOrFail($id);
+        return $panel_type->description;
+    }
+    
 }
