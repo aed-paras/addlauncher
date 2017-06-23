@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin\metro;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use \App\MetroLine;
 
 class LineController extends Controller{
@@ -75,7 +76,7 @@ class LineController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        // Delete all stations in it
+        // TODO: Delete all stations in it
 
         $metro_line = MetroLine::find($id);
 

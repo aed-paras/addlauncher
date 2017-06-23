@@ -48,14 +48,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminauth', 'namespace' => '
         Route::get('/line/edit/{city_id}', 'LineController@edit');
         Route::put('/line/{id}', 'LineController@update');
         Route::delete('/line/{id}', 'LineController@destroy');
-        // Ajax Routes
-        Route::get('/line/description/{id}', 'LineController@description');
+            // Ajax Routes
+            Route::get('/line/description/{id}', 'LineController@description');
 
         // Stations
         Route::get('/station/{line_id}', 'StationController@index');
         Route::post('/station', 'StationController@store');
         Route::put('/station/{id}', 'StationController@update');
         Route::delete('/station/{id}', 'StationController@destroy');
+            // Ajax Routes
+            Route::get('/station/description/{id}', 'StationController@description');
         
         // Panels
         Route::get('/panel/{station_id}', 'PanelController@index');

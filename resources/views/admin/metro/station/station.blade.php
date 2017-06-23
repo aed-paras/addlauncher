@@ -2,6 +2,10 @@
 
 @section('metro_active') active @endsection
 
+@section('head_import_scripts')
+	@include('plugins.tiny-mce')
+@endsection
+
 @section('content')
 	@include('plugins.admin-heading', ['title' => 'Metro Stations'])
     <nav class="blue lighten-1">
@@ -9,8 +13,8 @@
             <div class="nav-wrapper">
                 <div class="col s12">
                     <a href="{{ url('admin/metro') }}" class="breadcrumb"> Metro</a>
-                    <a href="{{ url('admin/metro/city') }}" class="breadcrumb"> {{ $current_line->metro_city->name }}</a>
-                    <a href="{{ url('admin/metro/line/'.$current_line->metro_city->id) }}" class="breadcrumb"> {{ $current_line->name }}</a>
+                    <a href="{{ url('admin/metro/city') }}" class="breadcrumb"> {{ $line->metro_city->name }}</a>
+                    <a href="{{ url('admin/metro/line/'.$line->metro_city->id) }}" class="breadcrumb"> {{ $line->name }}</a>
                     <a class="breadcrumb"> Stations</a>
                 </div>
             </div>
@@ -19,21 +23,11 @@
 
 	<div class="container">
 		<br>
-		<h5>Add Metro Station</h5>
-		<div class="row">
-			<form action="{{ url('admin/metro/station') }}" method="post" class="col s12">
-				{{ csrf_field() }}
-                <input type="hidden" name="line_id" value="{{ $current_line->id }}">
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="station_name" type="text" class="validate" name="name" maxlength="255" autofocus="on" required>
-						<label for="station_name">Metro station Name</label>
-						<button type="submit" class="btn blue lighten-2 waves-effect waves-light"><i class="material-icons left">add</i>Add Station</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<br>
+
+		@include('plugins.add_btn')
+
+		@include('plugins.validation_error')
+
 		<h5>List of metro station</h5>
 		<table class="highlight">
 			<thead>
@@ -47,11 +41,10 @@
 			@forelse ($stations as $station)
 				<tr class="station_row" id="station_row_{{$station->id}}">
 					<td>{{ $station->id }}</td>
-					<td class="station-name">{{ $station->name }}</td>
+					<td class="station-name"><a href="#view_modal" data-id="{{ $station->id }}">{{ $station->name }}</a></td>
 					<td class="right-align">
 						<a href="{{ url('admin/metro/panel/'.$station->id) }}" class="waves-effect waves-light btn blue lighten-2">View Panels</a>
-						<a href="#edit_modal" class="waves-effect waves-light btn yellow darken-3 edit-btn" data-id="{{$station->id}}">Edit</a>
-						{{-- <a href="#" class="waves-effect waves-light btn yellow darken-4">Hide</a> --}}
+						<a href="{{ url('admin/metro/station/edit/'.$station->id) }}" class="waves-effect waves-light btn yellow darken-3">Edit</a>
 						<a class="waves-effect waves-light btn red delete-btn" data-id="{{$station->id}}">Delete</a>
 					</td>
 				</tr>
@@ -69,31 +62,75 @@
 
 	</div>
 
-	<!-- Modal Structure -->
-	<div id="edit_modal" class="modal">
-        <form action="{{ url('/admin/station/') }}" method="post" class="col s12">
+	<!-- Add Modal Structure -->
+	<div id="add_modal" class="modal modal-fixed-footer">
+        <form action="{{ url('/admin/metro/station/') }}" method="post" class="col s12">
             <div class="modal-content">
-                <h4>Edit Metro station Data</h4>
-                <div>Changing <span id="edit_name"></span></div>
-                <div class="row">
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }}
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="station_new_name_input" type="text" class="validate" name="name" maxlength="255" placeholder="">
-                            <label for="station_new_name_input">New Name</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <h4>Add Metro Station</h4>
+				{{ csrf_field() }}
+				<input type="hidden" name="line_id" value="{{ $line->id }}">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="station_name" type="text" class="validate" name="name" maxlength="255" required>
+						<label for="station_name">Metro Station Name</label>
+					</div>
+					<div class="input-field col s12">
+						<h6>Description (optional):</h6>
+						<textarea name="description" class="tinymce"></textarea>
+					</div>
+				</div>
+			</div>
             <div class="modal-footer">
-                <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Change</button>
+				<button type="submit" class="btn-flat lighten-2 waves-effect waves-light"><i class="material-icons left">add</i>Add Station</button>
             </div>
         </form>
+	</div>
+
+	<!-- View Modal Structure -->
+	<div id="view_modal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<a href="" class="btn-flat right waves-effect waves-light view_modal_edit_btn"><i class="material-icons left">mode_edit</i>Edit</a>
+			<h4>Station: <span id="view_name"></span>, <span id="view_line">{{ $line->name }}</span>, {{ $line->metro_city->name }}</h4>
+			<div class="divider"></div>
+			<br>
+			<div><strong>Description:</strong>
+				<br>
+				<span id="view_description"></span>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn-flat lighten-2 waves-effect waves-light modal-close">Close</button>
+		</div>
 	</div>
 
 @endsection
 
 @section('custom_scripts')
-    <script src="{{ asset('js/admin/metro/station.js') }}"></script>
+
+	<script>
+		$('.delete-btn').click(function () {
+			var self = $(this);
+			var id = self.data('id');
+			$.ajax({
+				url: baseurl + "/admin/metro/station/" + id,
+				method: 'DELETE',
+				data: { '_token': csrf }
+			}).done(function () {
+				$("#station_row_" + id).slideUp();
+				deleteNotification();
+			});
+
+		});
+
+		$('.station-name a').click(function () {
+			var id = $(this).data('id');
+			var station_name = $(this).text();
+			$('#view_name').text(station_name);
+			$('.view_modal_edit_btn').attr('href', baseurl + '/admin/metro/station/edit/' + id);
+			$.get(baseurl + '/admin/metro/station/description/' + id, {}, function (data) {
+				$('#view_description').html(data);
+			});
+		});
+	</script>
+
 @endsection
