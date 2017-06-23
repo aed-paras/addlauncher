@@ -49,7 +49,6 @@ class StationController extends Controller{
      */
     public function edit($id){
         $station = MetroStation::findOrFail($id);
-
         return view('admin.metro.station.edit', ['station' => $station]);
     }
 

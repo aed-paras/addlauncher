@@ -14,8 +14,8 @@ class AreaController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index(){
-		$areas = MetroArea::all();
-		return view('admin.metro.area', ['areas' => $areas]);
+		$areas = MetroArea::select(['id', 'name'])->get();
+		return view('admin.metro.area.area', ['areas' => $areas]);
 	}
 
 	/**
@@ -25,8 +25,14 @@ class AreaController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request){
+		$this->validate($request, [
+			'name' => 'required',
+            'description' => 'nullable|string|max:10000',
+		]);
+
         $area = new MetroArea;
         $area->name = $request->name;
+        $area->description = $request->description;
         $area->save();
         return back()->with(['message'=>['type' => 'success', 'title' => 'Created!', 'message'=>'New area created!', 'position' => 'topRight']]);
 	}
