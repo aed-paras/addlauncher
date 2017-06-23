@@ -28,7 +28,7 @@ class LineController extends Controller{
         $this->validate($request, [
             'name' => 'required',
             'city_id' => 'required|integer',
-            'description' => 'string',
+            'description' => 'nullable|string|max:10000',
         ]);
 
         $metro_line = new MetroLine;
@@ -60,11 +60,12 @@ class LineController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        $metro_line = MetroLine::find($id);
-        $metro_line->city_id = $request->city_id;
+        $metro_line = MetroLine::findOrFail($id);
+        $metro_line->metro_city_id = $request->city_id;
         $metro_line->name = $request->name;
+        $metro_line->description = $request->description;
         $metro_line->save();
-        return back()->with(['message'=>['type' => 'success', 'title' => 'Updated!', 'message'=>'Metro Line changed!', 'position' => 'topRight']]);
+        return redirect('admin/metro/line/'.$request->city_id)->with(['message'=>['type' => 'success', 'title' => 'Updated!', 'message'=>'Metro Line data!', 'position' => 'topRight']]);
     }
 
     /**

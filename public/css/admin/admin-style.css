@@ -35,3 +35,7 @@ header, main, footer {
 .padding-20{
     padding: 20px;
 }
+
+.alert-padding{
+    padding: 10px 20px;
+}

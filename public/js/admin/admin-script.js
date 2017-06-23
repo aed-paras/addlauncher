@@ -7,7 +7,8 @@ $('.modal').modal();
 function deleteNotification() {
     iziToast.success({
         title: 'Deleted!',
-        message: ''
+        message: '',
+        position: 'topRight'
     });
 }
 

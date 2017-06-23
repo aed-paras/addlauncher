@@ -27,6 +27,8 @@
 			<a href="#add_modal" class="btn-floating red btn-large"><i class="material-icons">add</i></a>
 		</div>
 
+		@include('plugins.validation_error')
+
 		<h5>List of metro lines</h5>
 		<table class="highlight">
 			<thead>
@@ -90,8 +92,13 @@
 		<div class="modal-content">
 			<a href="" class="btn-flat right waves-effect waves-light view_modal_edit_btn"><i class="material-icons left">mode_edit</i>Edit</a>
 			<h3>Line: <span id="view_name"></span></h3>
+			<hr>
 			<div>City: <span id="view_city">{{ $city->name }}</span></div>
-			<div>Description: <br><span id="view_description"></span></div>
+			<hr>
+			<div><strong>Description:</strong>
+				<br>
+				<span id="view_description"></span>
+			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="submit" class="btn-flat lighten-2 waves-effect waves-light modal-close">Close</button>
@@ -102,4 +109,29 @@
 
 @section('custom_scripts')
     <script src="{{ asset('js/admin/metro/line.js') }}"></script>
+	<script>
+		$('.delete-btn').click(function () {
+			var self = $(this);
+			var id = self.data('id');
+			$.ajax({
+				url: baseurl + "/admin/metro/line/" + id,
+				method: 'DELETE',
+				data: { '_token': csrf }
+			}).done(function () {
+				$("#line_row_" + id).slideUp();
+				deleteNotification();
+			});
+
+		});
+
+		$('.line-name a').click(function () {
+			var id = $(this).data('id');
+			var line_name = $(this).text();
+			$('#view_name').text(line_name);
+			$('.view_modal_edit_btn').attr('href', baseurl + '/admin/metro/line/edit/' + id);
+			$.get(baseurl + '/admin/metro/line/description/' + id, {}, function (data) {
+				$('#view_description').html(data);
+			});
+		});
+	</script>
 @endsection

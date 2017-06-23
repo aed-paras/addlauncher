@@ -25,14 +25,14 @@
 		<br>
 
 		<div class="fixed-action-btn">
-			<a href="#add_modal" class="btn-floating red btn-large"><i class="fa fa-angle-left"></i></a>
+			<a href="{{ url('admin/metro/line/'.$line->metro_city->id) }}" class="btn-floating red btn-large"><i class="fa fa-angle-left"></i></a>
 		</div>
 
 		<h5>Edit {{ $line->name }}</h5>
         
         <div class="row">
             <div class="col s12">
-                <form action="{{ url('admin/metro/line/'.$line->metro_city->id) }}" method="post">
+                <form action="{{ url('admin/metro/line/'.$line->id) }}" method="post">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     
@@ -42,10 +42,9 @@
                             <label for="line_name">Metro line Name</label>
                         </div>
                         <div class="input-field col m6 s12">
-                            <select name="city_id" id="city_select">
-                                <option value="" disabled selected>Choose your option</option>
+                            <select name="city_id" id="city_select" required>
                                 @foreach($cities as $city)
-                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    <option value="{{ $city->id }}" id="city_id_{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             </select>
                             <label>Metro City</label>
@@ -55,6 +54,9 @@
                             <textarea name="description" class="tinymce">
                                 {!! $line->description !!}
                             </textarea>
+                        </div>
+                        <div class="input-field col s12 right-align">
+                            <button type="submit" class="btn blue lighten-2 waves-effect waves-light">Save Changes</button>
                         </div>
     				</div>
 
@@ -70,6 +72,7 @@
 
 @section('custom_scripts')
     <script>
+        $('#city_id_{{ $line->metro_city->id }}').prop('selected', true);
         $('select').material_select();
     </script>
 @endsection
